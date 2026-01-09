@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DenkFink</title>
-
-    <script src="config.js"></script>
-
+    <title>Denkfink</title>
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
     <style>
@@ -29,54 +26,36 @@
             color: white;
             border: none;
             border-radius: 5px;
-            outline: none;
             transition: background-color 0.2s;
         }
 
-        #talk-btn:hover {
-            opacity: 0.9;
-        }
+        #talk-btn:hover { opacity: 0.9; }
 
-        /* HIDE the widget completely */
-        elevenlabs-convai {
-            display: none;
-        }
+        /* Hide the widget */
+        elevenlabs-convai { display: none; }
     </style>
 </head>
 <body>
 
     <button id="talk-btn" onclick="startConversation()">Start</button>
 
-    <elevenlabs-convai id="agent-widget"></elevenlabs-convai>
+    <elevenlabs-convai 
+        agent-id="agent_4201kefvvr4derc85ewr0ba5f6ck" 
+        id="agent-widget">
+    </elevenlabs-convai>
 
     <script>
-        // 1. Get references to elements
         const agentElement = document.getElementById('agent-widget');
         const btn = document.getElementById('talk-btn');
 
-        // 2. INJECT THE ID FROM CONFIG.JS
-        // This takes the ID from your config file and puts it into the HTML tag
-        if (typeof ENV !== 'undefined' && ENV.AGENT_ID) {
-            agentElement.setAttribute('agent-id', ENV.AGENT_ID);
-        } else {
-            alert("Error: config.js not found or Agent ID missing.");
-        }
-
-        // 3. Start Function
         function startConversation() {
-            try {
-                agentElement.startSession();
-                btn.innerText = "Listening..."; 
-                btn.style.backgroundColor = "#ff4444"; 
-            } catch (error) {
-                console.error(error);
-                alert("Could not start. Check console for details.");
-            }
+            agentElement.startSession();
+            btn.innerText = "Listening..."; 
+            btn.style.backgroundColor = "#ff4444"; 
         }
 
-        // 4. Reset Button when call ends
         agentElement.addEventListener('elevenlabs-convai:call-ended', () => {
-            btn.innerText = "Start";
+            btn.innerText = "Start Conversation";
             btn.style.backgroundColor = "#007bff";
         });
     </script>
