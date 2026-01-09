@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jarvis Interface</title>
+    <title>DenkFink</title>
 
     <script src="config.js"></script>
 
@@ -45,7 +45,7 @@
 </head>
 <body>
 
-    <button id="talk-btn" onclick="startConversation()">Start Conversation</button>
+    <button id="talk-btn" onclick="startConversation()">Start</button>
 
     <elevenlabs-convai id="agent-widget"></elevenlabs-convai>
 
@@ -76,7 +76,7 @@
 
         // 4. Reset Button when call ends
         agentElement.addEventListener('elevenlabs-convai:call-ended', () => {
-            btn.innerText = "Start Conversation";
+            btn.innerText = "Start";
             btn.style.backgroundColor = "#007bff";
         });
     </script>
