@@ -37,7 +37,7 @@
 </head>
 <body>
 
-    <button id="talk-btn" onclick="startConversation()">Start</button>
+    <button id="talk-btn" onclick="startConversation()">StartConversation</button>
 
     <elevenlabs-convai 
         agent-id="agent_4201kefvvr4derc85ewr0ba5f6ck" 
@@ -55,7 +55,7 @@
         }
 
         agentElement.addEventListener('elevenlabs-convai:call-ended', () => {
-            btn.innerText = "Start Conversation";
+            btn.innerText = "Start";
             btn.style.backgroundColor = "#007bff";
         });
     </script>
