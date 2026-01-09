@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Denkfink</title>
-    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+    <title>Jarvis Interface</title>
+
+    <script src="config.js"></script>
+
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
     <style>
-        /* Simple Dark Styling */
         body {
             background-color: #1a1a1a;
             color: white;
@@ -19,7 +21,6 @@
             font-family: sans-serif;
         }
 
-        /* The Button Styling */
         #talk-btn {
             padding: 20px 40px;
             font-size: 20px;
@@ -29,13 +30,14 @@
             border: none;
             border-radius: 5px;
             outline: none;
+            transition: background-color 0.2s;
         }
 
-        #talk-btn:active {
-            background-color: #0056b3;
+        #talk-btn:hover {
+            opacity: 0.9;
         }
 
-        /* 2. IMPORTANT: Hide the default ElevenLabs widget completely */
+        /* HIDE the widget completely */
         elevenlabs-convai {
             display: none;
         }
@@ -43,27 +45,40 @@
 </head>
 <body>
 
-    <button id="talk-btn" onclick="startConversation()">Start</button>
+    <button id="talk-btn" onclick="startConversation()">Start Conversation</button>
 
-    <elevenlabs-convai 
-        agent-id="PASTE_YOUR_AGENT_ID_HERE" 
-        id="agent-widget">
-    </elevenlabs-convai>
+    <elevenlabs-convai id="agent-widget"></elevenlabs-convai>
 
     <script>
-        function startConversation() {
-            // 4. Find the hidden widget and tell it to start
-            const agent = document.getElementById('agent-widget');
-            const btn = document.getElementById('talk-btn');
+        // 1. Get references to elements
+        const agentElement = document.getElementById('agent-widget');
+        const btn = document.getElementById('talk-btn');
 
+        // 2. INJECT THE ID FROM CONFIG.JS
+        // This takes the ID from your config file and puts it into the HTML tag
+        if (typeof ENV !== 'undefined' && ENV.AGENT_ID) {
+            agentElement.setAttribute('agent-id', ENV.AGENT_ID);
+        } else {
+            alert("Error: config.js not found or Agent ID missing.");
+        }
+
+        // 3. Start Function
+        function startConversation() {
             try {
-                agent.startSession();
-                btn.innerText = "Listening..."; // Change text so you know it worked
-                btn.style.backgroundColor = "#ff4444"; // Change color to red
+                agentElement.startSession();
+                btn.innerText = "Listening..."; 
+                btn.style.backgroundColor = "#ff4444"; 
             } catch (error) {
-                alert("Please add your Agent ID in the code first!");
+                console.error(error);
+                alert("Could not start. Check console for details.");
             }
         }
+
+        // 4. Reset Button when call ends
+        agentElement.addEventListener('elevenlabs-convai:call-ended', () => {
+            btn.innerText = "Start Conversation";
+            btn.style.backgroundColor = "#007bff";
+        });
     </script>
 
 </body>
