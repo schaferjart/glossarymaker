@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Assistant</title>
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+
+    <style>
+        /* Simple Dark Styling */
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        /* The Button Styling */
+        #talk-btn {
+            padding: 20px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #talk-btn:active {
+            background-color: #0056b3;
+        }
+
+        /* 2. IMPORTANT: Hide the default ElevenLabs widget completely */
+        elevenlabs-convai {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="talk-btn" onclick="startConversation()">Start Conversation</button>
+
+    <elevenlabs-convai 
+        agent-id="PASTE_YOUR_AGENT_ID_HERE" 
+        id="agent-widget">
+    </elevenlabs-convai>
+
+    <script>
+        function startConversation() {
+            // 4. Find the hidden widget and tell it to start
+            const agent = document.getElementById('agent-widget');
+            const btn = document.getElementById('talk-btn');
+
+            try {
+                agent.startSession();
+                btn.innerText = "Listening..."; // Change text so you know it worked
+                btn.style.backgroundColor = "#ff4444"; // Change color to red
+            } catch (error) {
+                alert("Please add your Agent ID in the code first!");
+            }
+        }
+    </script>
+
+</body>
+</html>
